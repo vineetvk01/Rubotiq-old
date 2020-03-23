@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "client": "yarn workspace dbdt-client start",
-    "server": "yarn workspace dbdt-server start",
+    "server": "yarn workspace dbdt-server start-prod",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
     "build-client": "yarn workspace dbdt-client build",
     "build-server": "yarn workspace dbdt-server build",
