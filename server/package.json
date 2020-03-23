@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start-prod": "npm run build && node dist/www.js",
-    "start": "npm run build && nodemon dist/www.js",
+    "start-prod": "yarn run build && node dist/www.js",
+    "start": "yarn build && nodemon dist/www.js",
     "build": "babel src/ -d dist"
   },
   "author": "Vineet Srivastav",
