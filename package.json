@@ -1,11 +1,14 @@
 {
-  "name": "DBDesignTool",
+  "name": "database-design-tool",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "client": "yarn workspace weeducate-client start",
-    "server": "yarn workspace weeducate-server start",
-    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
+    "client": "yarn workspace dbdt-client start",
+    "server": "yarn workspace dbdt-server start",
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
+    "build-client": "yarn workspace dbdt-client build",
+    "build-server": "yarn workspace dbdt-server build",
+    "build": "\"yarn build-server\"  \"yarn build-client\""
   },
   "workspaces": [
     "client",
