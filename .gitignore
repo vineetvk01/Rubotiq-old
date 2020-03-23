@@ -1,5 +1,6 @@
 # Don't commit dist folder
 dist/
+build/
 
 # Logs
 logs
