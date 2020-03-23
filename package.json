@@ -6,7 +6,7 @@
     "client": "yarn workspace dbdt-client start",
     "server": "yarn workspace dbdt-server start-prod",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
-    "build-client": "yarn workspace dbdt-client build",
+    "build-client": "yarn workspace dbdt-client build"
   },
   "workspaces": [
     "client",
