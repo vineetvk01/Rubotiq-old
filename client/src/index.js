@@ -19,12 +19,14 @@ const AppWrapper = () => {
     <>
       <Router>
         <Navigation />
+        <main>
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/about" component={About} />
           <Route exact path="/pricing" component={Pricing} />
         </Switch>
+        </main>
       </Router>
     </>
   );
