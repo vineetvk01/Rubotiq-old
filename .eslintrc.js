@@ -1,7 +1,7 @@
 module.exports = {
   env: {
-    browser: true,
-    es6: true
+    es6: true,
+    node: true
   },
   extends: [
     'plugin:react/recommended',
@@ -22,5 +22,55 @@ module.exports = {
     'react'
   ],
   rules: {
+    "indent": [
+        "error",
+        2
+    ],
+    "linebreak-style": [
+        "error",
+        "unix"
+    ],
+    "quotes": [
+        "error",
+        "single"
+    ],
+    "semi": [
+        "error",
+        "always"
+    ],
+    "keyword-spacing":[
+        "error"
+    ],
+    "space-before-function-paren": [
+        "error",
+        "always"
+    ],
+    "space-before-blocks": [
+        "error",
+        "always"
+    ],
+    "comma-spacing": [
+        "error",
+        { 
+          "before": false,
+          "after": true 
+        }
+    ],
+    "space-in-parens": [
+        "error", 
+        "never"
+    ],
+    "no-console":[
+        "error"
+    ],
+    "no-var":[
+        "error"
+    ],
+    "prefer-const": [
+        "error"
+    ],
+    "eol-last": [
+        "error"
+    ]
   }
 }

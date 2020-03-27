@@ -7,7 +7,7 @@
     "server": "yarn workspace dbdt-server start-prod",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
     "build-client": "yarn workspace dbdt-client build",
-    "lint": "eslint --fix --ext .js ./ --max-warnings=0"
+    "lint": "eslint --fix --ext .js ./"
   },
   "workspaces": [
     "client",

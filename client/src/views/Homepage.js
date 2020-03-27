@@ -26,13 +26,13 @@ const HomePage = () => {
           <p className="light-text text-center">coming soon</p>
         </DCol>
       </DRow>
-      <div style={{height: '50px'}} />
+      <div style={{ height: '50px' }} />
       <DRow>
         <DCol md={{ span: 10, offset: 1 }}>
           <h3 className="bold-heading text-center"> Why DBDesign.Dev ? </h3>
         </DCol>
       </DRow>
-      <div style={{height: '50px'}} />
+      <div style={{ height: '50px' }} />
       <DRow>
         <DCol md={{ span: 8, offset: 2 }}>
           <DRow>
@@ -50,7 +50,7 @@ const HomePage = () => {
         </DCol>
       </DRow>
     </DContainer>
-  )
-}
+  );
+};
 
 export default HomePage;
