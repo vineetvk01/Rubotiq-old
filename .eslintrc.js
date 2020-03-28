@@ -23,54 +23,63 @@ module.exports = {
   ],
   rules: {
     "indent": [
-        "error",
-        2
+      "error",
+      2
     ],
     "linebreak-style": [
-        "error",
-        "unix"
+      "error",
+      "unix"
     ],
     "quotes": [
-        "error",
-        "single"
+      "error",
+      "single"
     ],
     "semi": [
-        "error",
-        "always"
+      "error",
+      "always"
     ],
-    "keyword-spacing":[
-        "error"
+    "keyword-spacing": [
+      "error"
     ],
     "space-before-function-paren": [
-        "error",
-        "always"
+      "error",
+      "always"
     ],
     "space-before-blocks": [
-        "error",
-        "always"
+      "error",
+      "always"
     ],
     "comma-spacing": [
-        "error",
-        { 
-          "before": false,
-          "after": true 
-        }
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
     ],
     "space-in-parens": [
-        "error", 
-        "never"
+      "error",
+      "never"
     ],
-    "no-console":[
-        "error"
+    "no-console": [
+      "error"
     ],
-    "no-var":[
-        "error"
+    "no-var": [
+      "error"
     ],
     "prefer-const": [
-        "error"
+      "error"
     ],
     "eol-last": [
-        "error"
+      "error"
+    ],
+    "comma-dangle": [
+      "error", {
+        "arrays": "never",
+        "objects": "always",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
     ]
   }
 }
