@@ -80,6 +80,9 @@ module.exports = {
         "exports": "never",
         "functions": "never"
       }
+    ],
+    "camelcase": [
+      "error", {ignoreDestructuring: true, properties: "never"}
     ]
   }
 }

@@ -1,19 +1,20 @@
 import mongoose from 'mongoose';
-import { MONGODB_URL } from '../constants';
+import constants from '../constants';
 
 import Logger from '../logger';
 const logger = Logger('db :');
 
 const dbConnect = () => {
   return new Promise((resolve, reject) => {
-    mongoose.connect(MONGODB_URL, {
+    logger.debug(`Mongo_DB_URL: ${constants.MONGODB_URL}`);
+    mongoose.connect(constants.MONGODB_URL, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
     });
 
     mongoose.connection.on('connected', () => {
-      logger.info('Connected to the database');
+      logger.info('Connected to the Database');
       resolve('connected');
     });
 
