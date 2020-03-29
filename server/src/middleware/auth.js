@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
-import constants from '../constants/token';
+import User from '../models/users.model';
+import { JWT_KEY } from '../constants';
 
 const auth = async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
             error: 'Not authorized to access this resource, no token',
           });
         } else {
-          const data = await jwt.verify(token, constants.JWT_KEY);
+          const data = await jwt.verify(token, JWT_KEY);
           const user = await User.findOne({ _id: data._id, });
           if (!user) {
             throw new Error();

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { JWT_KEY, TIMEOUT } from '../constants/token';
+import constants from '../constants';
 
 const userSchema = mongoose.Schema({
   firstName: {
@@ -55,10 +55,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.methods.generateAuthToken = async function (req, res) {
+userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id, }, JWT_KEY);
-  return res.cookie('token', token, { maxAge: TIMEOUT, httpOnly: true, });
+  const jwtToken = jwt.sign({ _id: user._id, }, constants.JWT_KEY);
+  return jwtToken;
 };
 
 userSchema.statics.findByCredentials = async (email, password) => {
