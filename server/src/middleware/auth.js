@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/users.model';
-import { JWT_KEY } from '../constants';
+import constants from '../constants';
+
+import Logger from '../logger';
+const logger = Logger('Auth.Middleware :');
 
 const auth = async (req, res, next) => {
   try {
@@ -9,14 +12,16 @@ const auth = async (req, res, next) => {
         .split(';')
         .filter((cookie) => cookie.indexOf('token') !== -1);
       if (cookieArray.length > 0) {
+        logger.info('Found TOKEN cookie attached in headers');
         const token = cookieArray[0].split('=')[1];
 
         if (!token) {
+          logger.info('No Found TOKEN cookie attached in headers');
           res.status(401).send({
             error: 'Not authorized to access this resource, no token',
           });
         } else {
-          const data = await jwt.verify(token, JWT_KEY);
+          const data = await jwt.verify(token, constants.JWT_KEY);
           const user = await User.findOne({ _id: data._id, });
           if (!user) {
             throw new Error();

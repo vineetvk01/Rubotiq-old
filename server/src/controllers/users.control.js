@@ -2,7 +2,7 @@ import User from '../models/users.model';
 import constants from '../constants';
 
 import Logger from '../logger';
-const logger = Logger('users.controller :');
+const logger = Logger('Users.Controller :');
 
 exports.register = async (req, res) => {
   logger.info('A new Signup request...');
@@ -41,28 +41,36 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password, } = req.body;
+    logger.info(`Login request for email: ${email}`);
     const user = await User.findByCredentials(email, password);
-
     if (!user) {
+      logger.warn(`Wrong combination found for the email ${email}`);
       res
         .status(401)
         .send({ error: 'Login failed! Check authentication credentials', });
     }
-
-    await user.generateAuthToken(req, res);
-
+    const authToken = await user.generateAuthToken(req, res);
+    res.cookie('token', authToken, { maxAge: constants.TIMEOUT, httpOnly: true, });
     res.status(200).send({ user, });
   } catch (error) {
-    res.status(400).send(error);
+    logger.error(`Wrong combination found for the email ${error}`);
+    res.status(400).send({ status: 'failure', error, });
   }
 };
 
 exports.profile = async (req, res) => {
   logger.info('Checking logged in user info.');
-  if (req.user) {
-    res.send({ session: 'active', user: req.user, });
-    logger.info('Active Session Exists.');
-  } else {
+  try {
+    if (req.user) {
+      const currentUser = req.user.toObject();
+      delete currentUser.password;
+      if (currentUser) {
+        res.send({ session: 'active', user: currentUser, });
+        logger.info('Active Session Exists.');
+      }
+    }
+    throw new Error('No User Exists');
+  } catch (err) {
     res.send({ session: 'inactive', });
     logger.info('No Active Session Found.');
   }
@@ -77,8 +85,8 @@ exports.update = async (req, res) => {
 exports.logout = async (req, res) => {
   // Log user out of the application
   try {
-    res.clearCookie('token', { domain: req.headers.host, });
-    res.status(200).send('User logged out successfully.');
+    res.clearCookie('token', { });
+    res.status(200).send({ status: 'success', message: 'User logged out successfully.', });
   } catch (error) {
     res.status(500).send(error);
   }
