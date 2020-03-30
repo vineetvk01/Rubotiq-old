@@ -5,7 +5,8 @@
   "scripts": {
     "client": "yarn workspace dbdt-client start",
     "server": "yarn workspace dbdt-server start-prod",
-    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
+    "server-dev": "yarn workspace dbdt-server start",
+    "start": "concurrently --kill-others-on-fail \"yarn server-dev\"  \"yarn client\"",
     "build-client": "yarn workspace dbdt-client build",
     "lint": "eslint --fix --ext .js ./"
   },

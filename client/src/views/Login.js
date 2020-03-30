@@ -5,6 +5,8 @@ import DForm from '../components/Form';
 import DAlert from '../components/Alert';
 import {isEmail, isValidPassword} from '../utils/validator';
 
+import { authenticateUser } from '../apis/auth';
+
 const Login = () => {
 
   const [email, setEmail] = useState('');
@@ -23,7 +25,17 @@ const Login = () => {
       setError({show:true, message:'Please enter a valid Password.'});
       return;
     }
-    console.log(validEmail, validPassword)
+    
+    authenticateUser(email, password).then((loggedIn) => {
+      if(loggedIn){
+        console.log('Yes Logged in')
+      }else{
+        throw new Error('Not Logged In');
+      }
+    }).catch(error=>{
+      console.log(error);
+    });
+
   };
 
   return (

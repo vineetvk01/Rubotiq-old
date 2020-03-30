@@ -20,14 +20,17 @@ export const userAuthStatus = async () => {
   return newState;
 };
 
-export const authenticateUser = async (credentials) => {
+export const authenticateUser = async (email, password) => {
   let newState = null;
+  const credentials = { email, password };
   try {
     const response = await axios.post(auth_urls.LOGIN_URL, credentials, {
       withCredentials: true,
     });
+    console.log(response);
     newState = Boolean(response.status === 200);
   } catch (error) {
+    console.log('error', error);
     newState = false;
   }
   return newState;

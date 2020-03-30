@@ -21,6 +21,17 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+// app.use(routes.SERVER, servers);
 app.use(routes.API, routers);
+
+app.use(function (req, res, next) {
+  res.status(404);
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ status: '404', error: 'Not found', });
+    return;
+  }
+  next();
+});
 
 export default app;
