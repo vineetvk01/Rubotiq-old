@@ -6,6 +6,7 @@ import Logger from '../logger';
 const logger = Logger('Auth.Middleware :');
 
 const auth = async (req, res, next) => {
+  logger.info('Checking Authentication in the request');
   try {
     if (req.headers.cookie) {
       const cookieArray = req.headers.cookie
@@ -27,9 +28,11 @@ const auth = async (req, res, next) => {
             throw new Error();
           }
           req.user = user;
+          logger.info('User is attached in the request');
         }
       }
     }
+    logger.info('Sending to next route');
     next();
   } catch (error) {
     res.status(401).send({ error: 'Not authorized to access this resource', });

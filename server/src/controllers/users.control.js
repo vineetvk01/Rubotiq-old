@@ -67,6 +67,7 @@ exports.profile = async (req, res) => {
       if (currentUser) {
         res.send({ session: 'active', user: currentUser, });
         logger.info('Active Session Exists.');
+        return;
       }
     }
     throw new Error('No User Exists');
