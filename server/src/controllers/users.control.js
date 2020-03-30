@@ -43,18 +43,14 @@ exports.login = async (req, res) => {
     const { email, password, } = req.body;
     logger.info(`Login request for email: ${email}`);
     const user = await User.findByCredentials(email, password);
-    if (!user) {
-      logger.warn(`Wrong combination found for the email ${email}`);
-      res
-        .status(401)
-        .send({ error: 'Login failed! Check authentication credentials', });
-    }
+    if (!user) return;
     const authToken = await user.generateAuthToken(req, res);
     res.cookie('token', authToken, { maxAge: constants.TIMEOUT, httpOnly: true, });
+    logger.info('Successfully Logged In');
     res.status(200).send({ user, });
   } catch (error) {
     logger.error(`Wrong combination found for the email ${error}`);
-    res.status(400).send({ status: 'failure', error, });
+    res.status(400).send({ status: 'failure', error: error.message, });
   }
 };
 

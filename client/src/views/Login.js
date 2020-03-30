@@ -6,12 +6,14 @@ import DAlert from '../components/Alert';
 import {isEmail, isValidPassword} from '../utils/validator';
 
 import { authenticateUser } from '../apis/auth';
+import { VerticalModal } from '../containers/modal';
 
 const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState({show: true});
+  const [error, setError] = useState({show: false});
+  const [modalShow, setModalShow] = useState(false);
 
   const handleSubmit = (event) => {
     const validEmail = isEmail(email);
@@ -26,14 +28,15 @@ const Login = () => {
       return;
     }
     
-    authenticateUser(email, password).then((loggedIn) => {
-      if(loggedIn){
-        console.log('Yes Logged in')
-      }else{
-        throw new Error('Not Logged In');
+    authenticateUser(email, password).then((data) => {
+      if(data.error){
+        setError({show: true, message: data.error});
+        return;
       }
-    }).catch(error=>{
-      console.log(error);
+      setError({show: false});
+      
+    }).catch(()=>{
+      setError('Internal Server error ! Please try after sometime.');
     });
 
   };
@@ -72,18 +75,18 @@ const Login = () => {
               </DForm.Group>
             </DForm.Row>
             <DButton variant="outline-primary" onClick={handleSubmit}>Login</DButton> 
-            <DButton variant="link">Signup ?</DButton> 
-            <DButton variant="link">Forgot Password ?</DButton>
+            <DButton variant="link" onClick={() => setModalShow(true)} >Signup ?</DButton> 
+            <DButton variant="link" onClick={() => setModalShow(true)} >Forgot Password ?</DButton>
           </DForm>
           <hr />
         </DCol>
       </DRow>
       <DRow>
         <DCol md={{ span: 3, offset: 3 }}>
-          <DButton variant="outline-dark" block><img height="32" src="./images/google.svg" alt="Google Logo" /> | Google</DButton><br/>
+          <DButton variant="outline-dark" onClick={() => setModalShow(true)} block><img height="32" src="./images/google.svg" alt="Google Logo" /> | Google</DButton><br/>
         </DCol>
         <DCol md={3}>
-          <DButton variant="outline-dark" block><img height="32" src="./images/github.svg" alt="Google Logo" /> | Github</DButton><br/>
+          <DButton variant="outline-dark" onClick={() => setModalShow(true)} block><img height="32" src="./images/github.svg" alt="Google Logo" /> | Github</DButton><br/>
         </DCol>
       </DRow>
       <div style={{ height: '100px' }} />
@@ -104,6 +107,10 @@ const Login = () => {
           </div>
         </DCol>
       </DRow>
+      <VerticalModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      ><h3 style={{textAlign: 'center'}}> Coming Soon! <span role="img" aria-label="Hurray">🎉</span> </h3></VerticalModal>
     </DContainer>
   );
 };

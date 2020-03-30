@@ -21,19 +21,16 @@ export const userAuthStatus = async () => {
 };
 
 export const authenticateUser = async (email, password) => {
-  let newState = null;
   const credentials = { email, password };
   try {
     const response = await axios.post(auth_urls.LOGIN_URL, credentials, {
       withCredentials: true,
     });
-    console.log(response);
-    newState = Boolean(response.status === 200);
+    return response.data
   } catch (error) {
-    console.log('error', error);
-    newState = false;
+    const data = error.response.data;
+    return data;
   }
-  return newState;
 };
 
 export const logoutUser = async () => {
