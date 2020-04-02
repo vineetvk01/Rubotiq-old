@@ -1,8 +1,22 @@
 import React from 'react';
 import DNavbar from '../components/Navbar';
 import DNav from '../components/Nav';
+import { connect } from 'react-redux';
 
-const Navigation = () => {
+import { logoutRequestAction } from '../actions/authActions';
+
+const LoginButton = () => <DNav.Link href="/login"> Login </DNav.Link>
+const ProfileButton = ({user, logout}) => (
+  <DNav.Dropdown title={`👤 ${user.firstName}`}>  
+    <DNav.DropdownItem href="/home" >Profile</DNav.DropdownItem>
+    <DNav.DropdownItem onClick={(e) => logout()} >Logout </DNav.DropdownItem>
+  </DNav.Dropdown>);
+    
+  
+
+const Navigation = (props) => {
+  const { isLoggedIn } = props.auth;
+  
   return (
     <DNavbar expand='lg' variant='light' bg='light'>
       <DNavbar.Brand href="/"><img height='24px' src="./images/ico.png" alt="app-logo" /> dbdesign.dev</DNavbar.Brand>
@@ -14,14 +28,24 @@ const Navigation = () => {
           <DNav.Link href="https://github.com/vineetvk01/DBDesignTool/issues/" target="_blank">Found Bug ?</DNav.Link>
         </DNav>
         <DNav>
-          <DNav.Link eventKey={1} href="#"><span id="support">Support</span></DNav.Link>
-          <DNav.Link eventKey={2} href="/login">
-            Login
-          </DNav.Link>
+          {isLoggedIn ? <ProfileButton user={props.auth.user} logout={props.logoutUser} /> : <LoginButton />}
+          <DNav.Link href="#"><span id="support">Support</span></DNav.Link>
         </DNav>
       </DNavbar.Collapse>
     </DNavbar>
   );
 };
 
-export default Navigation;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(logoutRequestAction()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

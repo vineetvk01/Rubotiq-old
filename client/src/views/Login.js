@@ -1,19 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { DContainer, DRow, DCol } from '../components/Container';
 import { DButton } from '../components/Button';
 import DForm from '../components/Form';
 import DAlert from '../components/Alert';
 import {isEmail, isValidPassword} from '../utils/validator';
+import { connect } from 'react-redux';
+import { authRequestAction } from '../actions/authActions';
+import  { Redirect } from 'react-router-dom'
 
-import { authenticateUser } from '../apis/auth';
 import { VerticalModal } from '../containers/modal';
 
-const Login = () => {
+const Login = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({show: false});
   const [modalShow, setModalShow] = useState(false);
+
+  const { isLoggedIn, error : errorMessage } = props.auth;
+  
+  useEffect(()=>{
+    if(errorMessage && errorMessage.error){
+      setError({show: true, message: errorMessage.error});
+    }
+  },[errorMessage]);
+  
+  if(isLoggedIn){
+    return <Redirect to='/' />
+  }
 
   const handleSubmit = (event) => {
     const validEmail = isEmail(email);
@@ -27,18 +41,9 @@ const Login = () => {
       setError({show:true, message:'Please enter a valid Password.'});
       return;
     }
-    
-    authenticateUser(email, password).then((data) => {
-      if(data.error){
-        setError({show: true, message: data.error});
-        return;
-      }
-      setError({show: false});
-      
-    }).catch(()=>{
-      setError('Internal Server error ! Please try after sometime.');
-    });
 
+    setError({show: false});
+    props.authRequest({email, password}); 
   };
 
   return (
@@ -115,4 +120,16 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authRequest: (user) => dispatch(authRequestAction(user)),
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

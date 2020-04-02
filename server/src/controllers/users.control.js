@@ -41,13 +41,15 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password, } = req.body;
-    logger.info(`Login request for email: ${email}`);
+    logger.info(`[Login Request] for email: ${email}`);
     const user = await User.findByCredentials(email, password);
-    if (!user) return;
+    if (!user) throw new Error('No user found with the credentials');
     const authToken = await user.generateAuthToken(req, res);
     res.cookie('token', authToken, { maxAge: constants.TIMEOUT, httpOnly: true, });
     logger.info('Successfully Logged In');
-    res.status(200).send({ user, });
+    const userObject = user.toObject();
+    delete userObject.password;
+    res.status(200).send({ status: 'success', user: userObject, });
   } catch (error) {
     logger.error(`Wrong combination found for the email ${error}`);
     res.status(400).send({ status: 'failure', error: error.message, });
