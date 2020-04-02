@@ -8,27 +8,28 @@ const auth_urls = {
 };
 
 export const userAuthStatus = async () => {
-  let newState = null;
   try {
     const response = await axios.get(auth_urls.USER_PROFILE_URL, {
       withCredentials: true,
     });
-    newState = Boolean(response.status === 200);
-  } catch {
-    newState = false;
+    const { session, user } = response.data;
+    if (session === 'active') {
+      return user;
+    }
+    throw new Error('Unable to fetch');
+  } catch (error) {
+    return false;
   }
-  return newState;
 };
 
-export const authenticateUser = async (email, password) => {
-  const credentials = { email, password };
+export const authenticateUser = async (credentials) => {
   try {
     const response = await axios.post(auth_urls.LOGIN_URL, credentials, {
       withCredentials: true,
     });
     return response.data
   } catch (error) {
-    const data = error.response.data;
+    const data = (error.response && error.response.data) || { status: 'failure', error: 'Server Not Reachable', };
     return data;
   }
 };
