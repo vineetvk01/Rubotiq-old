@@ -1,4 +1,4 @@
-import { LOGOUT_USER, AUTH_REQUEST, SET_USER, LOGOUT_REQUEST, AUTH_FAILED } from './types'
+import { LOGOUT_USER, AUTH_REQUEST, SET_USER, LOGOUT_REQUEST, AUTH_FAILED, SIGNUP_REQUEST, SIGNUP_ERROR } from './types'
 
 export const authRequestAction = (user = { username: '', password: '' }) => ({
     type: AUTH_REQUEST,
@@ -22,3 +22,15 @@ export const authFailedAction = (error) => ({
 export const unsetUserAction = () => ({
   type: LOGOUT_USER,
 })
+
+export const signupAction = (user) => ({
+  type: SIGNUP_REQUEST,
+  payload: user
+})
+
+export const setSignupErrorAction = (error) => ({
+  type: SIGNUP_ERROR,
+  payload: { error }
+})
+
+
