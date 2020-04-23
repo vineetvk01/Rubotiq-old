@@ -4,8 +4,16 @@ import constants from '../constants';
 import Logger from '../logger';
 const logger = Logger('Users.Controller :');
 
+const getErrorMessage = (error) => {
+  logger.error(error);
+  if (error.code === 11000 && error.keyPattern && error.keyPattern.email === 1) {
+    return 'This email id is already registered with us';
+  }
+  return error.errmsg;
+};
+
 exports.register = async (req, res) => {
-  logger.info('A new Signup request...');
+  logger.info('[New Signup] A new Signup request...');
   try {
     if (Object.keys(req.body).length === 0) {
       logger.info('Empty Request is made by the user...');
@@ -30,11 +38,11 @@ exports.register = async (req, res) => {
     const authToken = await user.generateAuthToken(res);
     res.cookie('token', authToken, { maxAge: constants.TIMEOUT, httpOnly: true, });
     logger.info('Cookie is set for the new user');
-    res.status(201).send({ status: 'success', userObject, });
+    res.status(201).send({ status: 'success', user: userObject, });
   } catch (error) {
     logger.error('Error occured while signing up the User');
-    logger.error(error);
-    res.status(400).send(error);
+    const errorMessage = getErrorMessage(error);
+    res.status(400).send({ status: 'failure', error: errorMessage, });
   }
 };
 

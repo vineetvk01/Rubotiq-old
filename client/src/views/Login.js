@@ -6,7 +6,7 @@ import DAlert from '../components/Alert';
 import {isEmail, isValidPassword} from '../utils/validator';
 import { connect } from 'react-redux';
 import { authRequestAction } from '../actions/authActions';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect, Link } from 'react-router-dom'
 
 import { VerticalModal } from '../containers/modal';
 
@@ -80,7 +80,7 @@ const Login = (props) => {
               </DForm.Group>
             </DForm.Row>
             <DButton variant="outline-primary" onClick={handleSubmit}>Login</DButton> 
-            <DButton variant="link" onClick={() => setModalShow(true)} >Signup ?</DButton> 
+            <Link to='/signup'><DButton variant="link">Signup ?</DButton></Link>
             <DButton variant="link" onClick={() => setModalShow(true)} >Forgot Password ?</DButton>
           </DForm>
           <hr />

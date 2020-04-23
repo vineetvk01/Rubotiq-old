@@ -5,6 +5,7 @@ const auth_urls = {
   LOGIN_URL: `${baseUrl}/api/users/login`,
   USER_PROFILE_URL: `${baseUrl}/api/users/me`,
   LOGOUT_URL: `${baseUrl}/api/users/me/logout`,
+  SIGNUP_URL: `${baseUrl}/api/users/register`,
 };
 
 export const userAuthStatus = async () => {
@@ -46,5 +47,26 @@ export const logoutUser = async () => {
     return Boolean(response.status === 200);
   } catch (error) {
     return false;
+  }
+};
+
+export const signupUser = async ({firstName, lastName, phone, email, password}) => {
+  try {
+    const response = await axios.post(
+      auth_urls.SIGNUP_URL,
+      { first_name: firstName,
+        last_name: lastName, 
+        email, 
+        phone,
+        password 
+      },
+      {
+        withCredentials: true,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    const data = (error.response && error.response.data) || { status: 'failure', error: 'Server Not Reachable', };
+    return data;
   }
 };

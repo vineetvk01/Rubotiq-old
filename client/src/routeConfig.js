@@ -1,9 +1,11 @@
 import Homepage from './views/Homepage';
 import Login from './views/Login';
+import Signup from './views/Signup';
 import About from './views/About';
 import Pricing from './views/Pricing';
 import Profile from './views/Profile';
 import Home from './views/Home';
+import NotFound from './views/NotFound';
 
 export const routeConfig = {
   indexPage: {
@@ -15,6 +17,11 @@ export const routeConfig = {
   loginPage: {
     component: Login,
     route: '/login',
+    exact: true
+  },
+  signupPage: {
+    component: Signup,
+    route: '/signup',
     exact: true
   },
   aboutPage: {
@@ -37,5 +44,8 @@ export const routeConfig = {
     route: '/home',
     exact: true
   },
-
+  notFoundPage: {
+    component: NotFound,
+    route: '/'
+  }
 };
