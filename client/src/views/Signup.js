@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import styled from 'styled-components';
+import styled from 'styled-components';
 import { DContainer, DRow, DCol } from '../components/Container';
 import { DButton } from '../components/Button';
 import DForm from '../components/Form';
@@ -7,7 +7,15 @@ import DAlert from '../components/Alert';
 import { connect } from 'react-redux';
 import { validateNewUser } from '../utils/validator';
 import { signupAction } from '../actions/authActions';
-import { testUser } from '../constants'
+import { testUser } from '../constants';
+import  { Link } from 'react-router-dom'
+
+const SignupBox = styled.div`
+  background-color: rgb(238, 117, 219, 0.3);
+  padding: 50px 20px;
+  min-height: 400px;
+  opacity: 0.8;
+`
 
 const Signup = ({signupRequest, auth}) => {
 
@@ -16,7 +24,6 @@ const Signup = ({signupRequest, auth}) => {
   const [ error, setError ] = useState({show:false});
 
   useEffect(() => {
-    console.log('rece', auth.signupError);
     if(auth.signupError && auth.signupError.error){
       setError({show:true, message: auth.signupError.error })
     }
@@ -66,7 +73,8 @@ const Signup = ({signupRequest, auth}) => {
     <DContainer fluid>
       <DRow>
         <DCol md={{ span: 6, offset: 3 }}>
-          <h5 className="bold-heading text-center">Sign-Up Now !</h5>
+          <SignupBox>
+          <h5 className="bold-heading text-center">Signup to access <img src="./images/ico.png" width="30px" alt="logo" /> KanBanMe</h5>
           <hr />
           <DAlert show={error.show} variant="danger" onClose={() => setError({show: false})} dismissible>
             {error.message}
@@ -139,7 +147,9 @@ const Signup = ({signupRequest, auth}) => {
               </DForm.Group>
             </DForm.Row>
             <DButton variant="outline-primary" onClick={handleSubmit} block> Signup </DButton> 
+            <Link to='/login'><DButton variant="link" block>Already have an account?  Login</DButton></Link>
           </DForm>
+          </SignupBox>
         </DCol>
       </DRow>
     </DContainer>
