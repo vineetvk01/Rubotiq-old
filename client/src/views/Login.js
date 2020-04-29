@@ -57,7 +57,7 @@ const Login = (props) => {
       <DRow>
         <DCol md={{ span: 4, offset: 4 }}>
           <LoginBox>
-          <h5 className="bold-heading text-center">Login to access <img src="./images/ico.png" width="30px" alt="logo" /> KanBanMe</h5>
+          <h5 className="bold-heading text-center">Login to access <img src={process.env.PUBLIC_URL+"/images/ico.png"} width="30px" alt="logo" /> KanBanMe</h5>
           <hr />
           <DAlert show={error.show} variant="danger" onClose={() => setError({show: false})} dismissible>
             {error.message}
