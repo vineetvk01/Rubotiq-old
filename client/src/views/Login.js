@@ -7,15 +7,21 @@ import {isEmail, isValidPassword} from '../utils/validator';
 import { connect } from 'react-redux';
 import { authRequestAction } from '../actions/authActions';
 import  { Redirect, Link } from 'react-router-dom'
+import styled from 'styled-components';
 
-import { VerticalModal } from '../containers/modal';
+const LoginBox = styled.div`
+  background-color: rgb(238, 117, 219, 0.3);
+  padding: 50px 20px;
+  min-height: 400px;
+  opacity: 0.8;
+`
+
 
 const Login = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({show: false});
-  const [modalShow, setModalShow] = useState(false);
 
   const { isLoggedIn, error : errorMessage } = props.auth;
   
@@ -49,8 +55,9 @@ const Login = (props) => {
   return (
     <DContainer fluid>
       <DRow>
-        <DCol md={{ span: 6, offset: 3 }}>
-          <h5 className="bold-heading text-center">Login Now !</h5>
+        <DCol md={{ span: 4, offset: 4 }}>
+          <LoginBox>
+          <h5 className="bold-heading text-center">Login to access <img src="./images/ico.png" width="30px" alt="logo" /> KanBanMe</h5>
           <hr />
           <DAlert show={error.show} variant="danger" onClose={() => setError({show: false})} dismissible>
             {error.message}
@@ -79,43 +86,14 @@ const Login = (props) => {
                 />
               </DForm.Group>
             </DForm.Row>
-            <DButton variant="outline-primary" onClick={handleSubmit}>Login</DButton> 
-            <Link to='/signup'><DButton variant="link">Signup ?</DButton></Link>
-            <DButton variant="link" onClick={() => setModalShow(true)} >Forgot Password ?</DButton>
+            <DButton variant="primary" onClick={handleSubmit} block>Login</DButton> 
+            <Link to='/signup'><DButton variant="link" block> Don't have an account?  Create Account</DButton></Link>
+            {/* <DButton variant="link" onClick={() => setModalShow(true)} block>Forgot Password ?</DButton> */}
           </DForm>
           <hr />
+          </LoginBox>
         </DCol>
       </DRow>
-      <DRow>
-        <DCol md={{ span: 3, offset: 3 }}>
-          <DButton variant="outline-dark" onClick={() => setModalShow(true)} block><img height="32" src="./images/google.svg" alt="Google Logo" /> | Google</DButton><br/>
-        </DCol>
-        <DCol md={3}>
-          <DButton variant="outline-dark" onClick={() => setModalShow(true)} block><img height="32" src="./images/github.svg" alt="Google Logo" /> | Github</DButton><br/>
-        </DCol>
-      </DRow>
-      <div style={{ height: '100px' }} />
-      <DRow>
-        <DCol xs={4}>
-          <div className="text-center">
-            <img height="80" src="./images/login/1.svg" alt="Person Running" />
-          </div>
-        </DCol>
-        <DCol xs={4}>
-          <div className="text-center">
-            <img height="80" src="./images/login/2.svg" alt="Group" />
-          </div>
-        </DCol>
-        <DCol xs={4}>
-          <div className="text-center">
-            <img height="80" src="./images/login/3.svg" alt="Chat" />
-          </div>
-        </DCol>
-      </DRow>
-      <VerticalModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      ><h3 style={{textAlign: 'center'}}> Coming Soon! <span role="img" aria-label="Hurray">🎉</span> </h3></VerticalModal>
     </DContainer>
   );
 };

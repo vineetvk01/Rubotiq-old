@@ -2,15 +2,26 @@ import React from 'react';
 import DNavbar from '../components/Navbar';
 import DNav from '../components/Nav';
 import { connect } from 'react-redux';
-
 import { logoutRequestAction } from '../actions/authActions';
+import styled from 'styled-components';
 
-const LoginButton = () => <DNav.Link href="/login"> Login </DNav.Link>
+const Avatar = styled.span`
+  border: 1px solid #000;
+  padding: 8px;
+  border-radius: 50%;
+  font-weight: bold;
+`;
+
+const LoginButton = () => <DNav.Link href="/login"> <b>Login</b> </DNav.Link>
+
+const DisplayPicture = <Avatar>VS</Avatar>
+
 const ProfileButton = ({user, logout}) => (
-  <DNav.Dropdown title={`👤 ${user.firstName}`}>  
-    <DNav.DropdownItem href="/home" >Profile</DNav.DropdownItem>
-    <DNav.DropdownItem onClick={(e) => logout()} >Logout </DNav.DropdownItem>
-  </DNav.Dropdown>);
+  <DNav.Dropdown title={DisplayPicture}>  
+    <DNav.DropdownItem href="/home" ><b>Settings</b></DNav.DropdownItem>
+    <DNav.DropdownItem onClick={(e) => logout()} ><b>Logout </b></DNav.DropdownItem>
+  </DNav.Dropdown>
+);
     
   
 
@@ -19,17 +30,12 @@ const Navigation = (props) => {
   
   return (
     <DNavbar expand='lg' variant='light' bg='light'>
-      <DNavbar.Brand href="/"><img height='24px' src="./images/ico.png" alt="app-logo" /> dbdesign.dev</DNavbar.Brand>
+      <DNavbar.Brand href="/"><img height='40px' src={`${process.env.PUBLIC_URL}/images/ico.png`} alt="app-logo" /> <b>KanBanMe</b></DNavbar.Brand>
       <DNavbar.Toggle aria-controls="responsive-navbar-nav" />
-      <DNavbar.Collapse id="responsive-navbar-nav">
-        <DNav className="mr-auto">
-          <DNav.Link href="#feature">Features</DNav.Link>
-          <DNav.Link href="/pricing">Pricing</DNav.Link>
-          <DNav.Link href="https://github.com/vineetvk01/DBDesignTool/issues/" target="_blank">Found Bug ?</DNav.Link>
-        </DNav>
+      <DNavbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
         <DNav>
           {isLoggedIn ? <ProfileButton user={props.auth.user} logout={props.logoutUser} /> : <LoginButton />}
-          <DNav.Link href="#"><span id="support">Support</span></DNav.Link>
+          <DNav.Link href="#"><span id="support"><b>Support</b></span></DNav.Link>
         </DNav>
       </DNavbar.Collapse>
     </DNavbar>
