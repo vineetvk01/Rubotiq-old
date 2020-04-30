@@ -24,6 +24,7 @@
     "log4js": "^6.1.2",
     "mongoose": "^5.8.12",
     "path": "^0.12.7",
+    "sanitize-html": "^1.23.0",
     "validator": "^12.2.0"
   },
   "devDependencies": {
