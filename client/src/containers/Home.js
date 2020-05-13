@@ -1,9 +1,8 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { DContainer, DRow, DCol } from '../components/Container'; 
-import DCard from '../components/Card'; 
-import  { Redirect } from 'react-router-dom';
-import PaddedHomeLayout from '../hoc/PadHome.hoc';
+import { DContainer, DRow, DCol } from '../components/Container';
+import DCard from '../components/Card';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MenuBox = styled(DCard)`
@@ -17,20 +16,7 @@ const MenuBox = styled(DCard)`
 `
 const MenuBody = styled(DCard.Body)`
   padding: 0;
-`
-
-const Board = styled(DCard)`
-  width: 150px;
-  height: 150px;
-  padding: 6px;
-  background-color: rgb(255,165,0, 0.9);
-`
-
-const BoardBody = styled(DCard.Body)`
-  padding: 6px;
-  color: #fff;
   font-weight: bold;
-  font-size: 18px;
 `
 
 
@@ -38,11 +24,11 @@ const Home = (props) => {
 
   const { isLoggedIn } = props.auth;
 
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
 
-  if(!isLoggedIn){
+  }, [])
+
+  if (!isLoggedIn) {
     return <Redirect to='/login' />
   }
 
@@ -51,19 +37,23 @@ const Home = (props) => {
       <DRow>
         <DCol md={3}>
           <MenuBox>
-            <MenuBody>Boards</MenuBody>
+            <DCard.Link href='/home'>
+              <MenuBody>Rubos</MenuBody>
+            </DCard.Link>
           </MenuBox>
           <MenuBox>
-            <MenuBody>Templates</MenuBody>
+            <DCard.Link href='/settings'>
+              <MenuBody>Integrations</MenuBody>
+            </DCard.Link>
+          </MenuBox>
+          <MenuBox>
+            <DCard.Link href='/settings'>
+              <MenuBody>Settings</MenuBody>
+            </DCard.Link>
           </MenuBox>
         </DCol>
         <DCol md={9}>
-          <h5>Your Boards :</h5>
-          <Board>
-            <BoardBody>
-              First
-            </BoardBody>
-          </Board>
+          {props.children}
         </DCol>
       </DRow>
     </DContainer>
@@ -82,4 +72,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PaddedHomeLayout(Home));
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

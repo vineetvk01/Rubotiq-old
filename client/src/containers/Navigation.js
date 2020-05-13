@@ -30,7 +30,7 @@ const Navigation = (props) => {
   
   return (
     <DNavbar expand='lg' variant='light' bg='light'>
-      <DNavbar.Brand href="/"><img height='40px' src={`${process.env.PUBLIC_URL}/images/ico.png`} alt="app-logo" /> <b>KanBanMe</b></DNavbar.Brand>
+      <DNavbar.Brand href="/"><img height='40px' src={`${process.env.PUBLIC_URL}/images/ico.png`} alt="app-logo" /> <b>Rubotiq</b></DNavbar.Brand>
       <DNavbar.Toggle aria-controls="responsive-navbar-nav" />
       <DNavbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
         <DNav>

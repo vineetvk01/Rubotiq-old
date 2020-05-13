@@ -1,7 +1,8 @@
 import Login from './views/Login';
 import Signup from './views/Signup';
 import Profile from './views/Profile';
-import Home from './views/Home';
+import Dashboard from './views/Dashboard';
+import Settings from './views/Settings';
 import NotFound from './views/NotFound';
 
 export const routeConfig = {
@@ -21,13 +22,13 @@ export const routeConfig = {
     exact: true
   },
   userHomePage: {
-    component: Home,
+    component: Dashboard,
     route: '/',
     exact: true
   },
   boardPage: {
-    component: Home,
-    route: '/board/:id',
+    component: Settings,
+    route: '/settings',
     exact: true
   },
   notFoundPage: {
