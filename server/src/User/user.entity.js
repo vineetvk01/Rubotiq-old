@@ -1,4 +1,4 @@
-export default function buildMakeUser ({ Id, validation, sanitize, }) {
+export default function buildMakeUser ({ Id, md5, validation, sanitize, }) {
   return function makeUser ({
     id = Id.makeId(),
     firstName,
@@ -43,8 +43,10 @@ export default function buildMakeUser ({ Id, validation, sanitize, }) {
       throw new Error('Name or email contains no usable value.');
     }
 
+    let hash;
     return Object.freeze({
       getId: () => id,
+      getHash: () => hash || (hash = makeHash()),
       getFirstName: () => sanitizedFirstName,
       getLastName: () => sanitizedLastName,
       getCreatedOn: () => createdOn,
@@ -53,5 +55,9 @@ export default function buildMakeUser ({ Id, validation, sanitize, }) {
       isActive: () => isActive,
       getPassword: () => password,
     });
+
+    function makeHash () {
+      return md5(email);
+    }
   };
 }

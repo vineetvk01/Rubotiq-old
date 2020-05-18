@@ -1,11 +1,11 @@
 
 import Logger from '../../logger';
-const logger = Logger('[ Register-User :: Controller ]');
+const logger = Logger('[ Login-User :: Controller ]');
 
-export default function makeRegisterUser ({ addUser, }) {
-  return async function registerUser (httpRequest) {
+export default function makeLoginUser ({ getUser, tokenGenerator, }) {
+  return async function loginUser (httpRequest) {
     try {
-      logger.info(' New Register user request');
+      logger.info(' New Login request from user');
 
       const { source = {}, ...userInfo } = httpRequest.body;
 
@@ -17,23 +17,34 @@ export default function makeRegisterUser ({ addUser, }) {
 
       logger.debug('\n (a) Source :', source, '\n (b) User-Info :', userInfo);
 
-      delete userInfo.isActive;
-      delete userInfo.createdOn;
-
-      const userAdded = await addUser({
+      const user = await getUser({
         ...userInfo,
         source,
       });
 
-      delete userAdded.password;
+      delete user.password;
+
+      const token = tokenGenerator({
+        ...user,
+      });
+      // delete userAdded.password;
+
+      logger.info('Token is generated and will be added to the header');
 
       return {
         headers: {
           'Content-Type': 'application/json',
-          'Last-Modified': new Date(userAdded.modifiedOn).toUTCString(),
+          'Last-Modified': new Date().toUTCString(),
         },
-        statusCode: 201,
-        body: { user: userAdded, },
+        cookies: [
+          {
+            name: 'token',
+            value: token,
+            config: { maxAge: 86400000, httpOnly: true, },
+          }
+        ],
+        statusCode: 200,
+        body: { user, },
       };
     } catch (e) {
       // TODO: Error logging

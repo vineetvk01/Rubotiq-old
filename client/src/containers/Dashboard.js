@@ -1,19 +1,11 @@
 import React from 'react';
 import DCard from '../components/Card';
+import { DRow, DCol } from '../components/Container';
 import styled from 'styled-components';
+import Tiqs  from './Tiqs';
 
-const Board = styled(DCard)`
-  width: 150px;
-  height: 150px;
-  padding: 6px;
-  background-color: rgb(255,165,0, 0.9);
-`
-
-const BoardBody = styled(DCard.Body)`
-  padding: 6px;
-  color: #fff;
+const SubHeading = styled.h5`
   font-weight: bold;
-  font-size: 18px;
 `
 
 const Settings = (props) => {
@@ -21,23 +13,23 @@ const Settings = (props) => {
     <>
       <h5>Dashboard :</h5>
       <hr />
-      <h5>Your Tiqs :</h5>
-      <Board>
-        <BoardBody>
-          Active 
-        </BoardBody>
-      </Board>
-      <Board>
-        <BoardBody>
-          Active 
-        </BoardBody>
-      </Board>
-      <Board>
-        <BoardBody>
-          Active 
-        </BoardBody>
-      </Board>
-      
+      <SubHeading>YOUR TIQS:</SubHeading>
+      <DRow>
+        <DCol md={12}>
+          {/* <Board>
+            <BoardBody>
+              Facebook > Instagram
+            </BoardBody>
+          </Board> */}
+          <Tiqs>
+            
+            <p>Hello2</p>
+            <p>Hello3</p>
+            <p>Hello4</p>
+          </Tiqs>
+        </DCol>
+      </DRow>
+
     </>
   )
 }
