@@ -1,6 +1,6 @@
-## KanBanMe
+## Rubotiq
 
-This tool is used to create Db Designs
+Automate your repeatable tasks by scheduling process or Intregrating through Webhooks.
 
 #### Production Status:
 
